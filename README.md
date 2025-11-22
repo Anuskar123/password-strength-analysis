@@ -1,3 +1,7 @@
+# Check Demo how it Works
+
+https://anuskar123.github.io/password-strength-analysis/
+
 # Password Strength & Hygiene Toolkit
 
 I built this to learn how attackers think about guessing passwords and to give myself (and others) feedback that is actually actionable. Instead of a generic "must include a number" rule set, this project looks at the patterns people really use and explains why they’re risky.

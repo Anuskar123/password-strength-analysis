@@ -1,0 +1,29 @@
+--- Password Scan Report ---
+Total: 4
+
+Password: ********
+Strength: Weak (37/100)  Entropy: 37.6 bits
+Crack Time: 20s
+[!] Patterns: Common term 'password'.
+Hints: Consider length >= 12 for baseline resilience. | Add digits and symbols for diversity. | Mix uppercase to raise combinations. | Introduce specials like !@#$%^&*.
+Suggestion: jm&0MrK3oSdkag
+--------------------------------------------------
+Password: ****************
+Strength: Robust (98/100)  Entropy: 98.07 bits
+Crack Time: 1054884880822y 74d 12h 48m 0s
+--------------------------------------------------
+Password: ********
+Strength: Moderate (41/100)  Entropy: 41.36 bits
+Crack Time: 4m 42s
+[!] Patterns: Common term 'password'.
+Hints: Consider length >= 12 for baseline resilience. | Mix uppercase to raise combinations. | Introduce specials like !@#$%^&*.
+Suggestion: ou@7P%SnC#DWsg
+--------------------------------------------------
+Password: **********
+Strength: Moderate (61/100)  Entropy: 61.29 bits
+Crack Time: 8y 342d 23h 34m 13s
+[!] Patterns: Repeated character run (>=3).
+[!] Personal context leak: alice, 1999, alice
+Hints: Consider length >= 12 for baseline resilience.
+Suggestion: yNzdjj&@M#lW9*
+--------------------------------------------------

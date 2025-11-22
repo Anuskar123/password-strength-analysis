@@ -1,0 +1,79 @@
+[
+  {
+    "password": "********",
+    "sha256": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+    "duplicate": false,
+    "entropy_bits": 37.6,
+    "score": 37,
+    "strength": "Weak",
+    "crack_seconds": 20,
+    "crack_display": "20s",
+    "patterns": [
+      "Common term 'password'."
+    ],
+    "personal_leaks": [],
+    "hints": [
+      "Consider length >= 12 for baseline resilience.",
+      "Add digits and symbols for diversity.",
+      "Mix uppercase to raise combinations.",
+      "Introduce specials like !@#$%^&*."
+    ],
+    "suggestion": "jm&0MrK3oSdkag"
+  },
+  {
+    "password": "****************",
+    "sha256": "3de3c3c7edcab8f7c39ca5d56c860be6e141c974a3478b4fe1831e63f56cc7e0",
+    "duplicate": false,
+    "entropy_bits": 98.07,
+    "score": 98,
+    "strength": "Robust",
+    "crack_seconds": 33266849601609031680,
+    "crack_display": "1054884880822y 74d 12h 48m 0s",
+    "patterns": [],
+    "personal_leaks": [],
+    "hints": [],
+    "suggestion": null
+  },
+  {
+    "password": "********",
+    "sha256": "8f0e2f76e22b43e2855189877e7dc1e1e7d98c226c95db247cd1d547928334a9",
+    "duplicate": false,
+    "entropy_bits": 41.36,
+    "score": 41,
+    "strength": "Moderate",
+    "crack_seconds": 282,
+    "crack_display": "4m 42s",
+    "patterns": [
+      "Common term 'password'."
+    ],
+    "personal_leaks": [],
+    "hints": [
+      "Consider length >= 12 for baseline resilience.",
+      "Mix uppercase to raise combinations.",
+      "Introduce specials like !@#$%^&*."
+    ],
+    "suggestion": "ou@7P%SnC#DWsg"
+  },
+  {
+    "password": "**********",
+    "sha256": "e5962d849ca6b7b01ec079a95430a54d20459681c987705e7815e029239b2586",
+    "duplicate": false,
+    "entropy_bits": 61.29,
+    "score": 61,
+    "strength": "Moderate",
+    "crack_seconds": 281921653,
+    "crack_display": "8y 342d 23h 34m 13s",
+    "patterns": [
+      "Repeated character run (>=3)."
+    ],
+    "personal_leaks": [
+      "alice",
+      "1999",
+      "alice"
+    ],
+    "hints": [
+      "Consider length >= 12 for baseline resilience."
+    ],
+    "suggestion": "yNzdjj&@M#lW9*"
+  }
+]

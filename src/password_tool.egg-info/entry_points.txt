@@ -1,0 +1,2 @@
+[console_scripts]
+pwtool = password_tool.cli:app

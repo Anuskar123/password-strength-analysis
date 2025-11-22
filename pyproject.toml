@@ -1,0 +1,36 @@
+[project]
+name = "password-tool"
+version = "0.1.0"
+description = "Advanced password strength analysis CLI"
+authors = [ { name = "Your Name" } ]
+requires-python = ">=3.9"
+readme = "README.md"
+license = { text = "UNLICENSED" }
+keywords = ["password", "security", "entropy", "cli"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Topic :: Security",
+  "Intended Audience :: Developers"
+]
+dependencies = [
+  "typer>=0.12",
+  "rich>=13.0"
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0", "mypy>=1.0", "ruff>=0.5.0"]
+docs = ["fpdf2>=2.7"]
+
+[project.scripts]
+pwtool = "password_tool.cli:app"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 100
+
+[tool.mypy]
+python_version = "3.9"
+strict = false

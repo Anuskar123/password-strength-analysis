@@ -1,0 +1,100 @@
+Metadata-Version: 2.4
+Name: password-tool
+Version: 0.1.0
+Summary: Advanced password strength analysis CLI
+Author: Your Name
+License: UNLICENSED
+Keywords: password,security,entropy,cli
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Topic :: Security
+Classifier: Intended Audience :: Developers
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+Requires-Dist: typer>=0.12
+Requires-Dist: rich>=13.0
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0; extra == "dev"
+Requires-Dist: mypy>=1.0; extra == "dev"
+Requires-Dist: ruff>=0.5.0; extra == "dev"
+
+# Password Strength & Hygiene Toolkit
+
+A pragmatic, security-minded password analysis CLI. Built to showcase clean Python architecture, not AI spit-out code. Emphasis is on clarity, modularity, and real-world signals attackers exploit.
+
+## Why It Exists
+
+Most checkers stop at length + character classes. This tool layers:
+
+- Entropy math (approximate brute force complexity)
+- Human pattern detection (sequences, keyboard walks, repeats, leetspeak)
+- Common password dataset checks
+- Personal context leakage (names, emails, dates) you can pass in
+- File audits with duplicate + reuse detection
+- Secure generator with policy knobs
+- Both textual and JSON reports for easy integration
+
+## Quick Start
+
+```bash
+# Install (editable)
+python -m venv .venv
+source .venv/bin/activate
+pip install -e .[dev]
+
+# CLI help
+pwtool --help
+```
+
+## Typical Usage
+
+```bash
+# Single password analysis
+pwtool analyze "P@ssw0rd2025!" --context "alice 2000-07-15 alice@example.com"
+
+# Scan a file (one password per line)
+pwtool scan passwords.txt --redact --json out.json
+
+# Generate strong password
+pwtool generate --length 18
+```
+
+## Design Highlights
+
+- Each concern isolated in its own module under `src/password_tool`.
+- Functional core + thin Typer CLI layer.
+- Uses `secrets` for randomness, not `random`.
+- Report objects kept simple (dict / dataclass) for portability.
+- No external network calls; safe for offline audits.
+
+## Reporting
+
+Scan produces two artifacts when requested:
+
+- Text report: human-readable summary.
+- JSON: machine-consumable records including flags, entropy, estimated crack time.
+
+## Estimating Crack Time
+
+We assume an aggressive GPU rig (10^10 guesses/sec baseline) and approximate search space size from dynamic charset detection. This is an order-of-magnitude educational figure, not a guarantee.
+
+## Extend Ideas
+
+- Integrate public breach APIs (optional, gated)
+- Add Markov model or probabilistic password rules
+- Provide interactive TUI with Rich live updates
+- Export CSV summary
+
+## Testing
+
+```bash
+pytest -q
+```
+
+## Philosophy
+
+Readable > Clever. Deterministic > Magical. Honest about limitations. This code should feel handcrafted—because it is.
+
+## License
+
+Select a license appropriate for sharing (currently UNLICENSED placeholder).

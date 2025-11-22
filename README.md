@@ -108,13 +108,10 @@ Breach API checks, reversed/shifted keyboard sequences, probabilistic strength m
 
 Use JSON output in CI to enforce minimum entropy; scan internal dumps without exposing raw passwords; auto-generate onboarding secrets.
 
-## Resume Summary
-
-"Built a Python CLI that evaluates password strength (entropy + real patterns), detects personal info leaks, audits files, and generates secure alternatives. Modular design, JSON/text reporting, and full test suite for reliability."
 
 ## Philosophy
 
 Readable > clever. Explain _why_, not just “weak”. Security learning > strict rule enforcement.
 
 
-## 11. Crack Time Estimate (Reality Check)
+

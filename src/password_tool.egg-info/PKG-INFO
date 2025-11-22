@@ -17,84 +17,126 @@ Provides-Extra: dev
 Requires-Dist: pytest>=7.0; extra == "dev"
 Requires-Dist: mypy>=1.0; extra == "dev"
 Requires-Dist: ruff>=0.5.0; extra == "dev"
+Provides-Extra: docs
+Requires-Dist: fpdf2>=2.7; extra == "docs"
 
 # Password Strength & Hygiene Toolkit
 
-A pragmatic, security-minded password analysis CLI. Built to showcase clean Python architecture, not AI spit-out code. Emphasis is on clarity, modularity, and real-world signals attackers exploit.
+I built this to learn how attackers think about guessing passwords and to give myself (and others) feedback that is actually actionable. Instead of a generic "must include a number" rule set, this project looks at the patterns people really use and explains why they’re risky.
 
-## Why It Exists
+## What It Does (Short Version)
 
-Most checkers stop at length + character classes. This tool layers:
+Analyze a single password or a whole file. Score it (entropy estimate), flag human patterns (repeats, keyboard walks, sequences, common words, leet variants like `P@ssw0rd`), warn if personal context (name, year) appears, suggest stronger alternatives, and optionally output JSON for automation.
 
-- Entropy math (approximate brute force complexity)
-- Human pattern detection (sequences, keyboard walks, repeats, leetspeak)
-- Common password dataset checks
-- Personal context leakage (names, emails, dates) you can pass in
-- File audits with duplicate + reuse detection
-- Secure generator with policy knobs
-- Both textual and JSON reports for easy integration
+## Why This Matters
+
+Attackers start with patterns and leaked datasets, not random brute force. When you see _why_ a password is weak you learn how to build better ones next time.
+
+## Layout
+
+```
+src/password_tool/
+  entropy.py    # entropy & strength classification
+  patterns.py   # pattern/common term detection
+  context.py    # personal info leak detection
+  generator.py  # secure password generator + policy
+  scanner.py    # batch file processing & reports
+  cli.py        # Typer-based CLI entry points
+data/common_passwords.txt
+tests/ (pytest unit tests)
+```
 
 ## Quick Start
 
 ```bash
-# Install (editable)
 python -m venv .venv
 source .venv/bin/activate
 pip install -e .[dev]
-
-# CLI help
 pwtool --help
 ```
 
-## Typical Usage
+## Example Usage
 
 ```bash
-# Single password analysis
-pwtool analyze "P@ssw0rd2025!" --context "alice 2000-07-15 alice@example.com"
-
-# Scan a file (one password per line)
-pwtool scan passwords.txt --redact --json out.json
-
-# Generate strong password
+pwtool analyze "P@ssw0rd2025!" --context "alice 2000 alice@example.com" --json-out one.json
+pwtool scan passwords.txt --redact --json-out scan.json
 pwtool generate --length 18
+pwtool policy
 ```
 
-## Design Highlights
+## Feature Highlights
 
-- Each concern isolated in its own module under `src/password_tool`.
-- Functional core + thin Typer CLI layer.
-- Uses `secrets` for randomness, not `random`.
-- Report objects kept simple (dict / dataclass) for portability.
-- No external network calls; safe for offline audits.
+- Entropy estimate + strength tiers (Weak / Moderate / Strong / Robust)
+- Pattern detection (repeats, sequences, keyboard walks, common words, leet forms)
+- Personal context leak check (names, emails, years)
+- File scan: duplicate detection via SHA-256, suggestions for weak entries
+- Secure generator using `secrets` with clear policy
+- Policy inspection (`pwtool policy`)
+- JSON + text reports
+- 10 test cases covering core logic & CLI output
 
-## Reporting
+## Entropy (Approximate)
 
-Scan produces two artifacts when requested:
+Formula: `bits = length * log2(charset_size)` where charset grows with detected classes (lower, upper, digits, specials). It’s a rough upper bound, not a guarantee.
 
-- Text report: human-readable summary.
-- JSON: machine-consumable records including flags, entropy, estimated crack time.
+## Patterns Detected
 
-## Estimating Crack Time
+Repeated character runs, ascending sequences (`abcd`, `1234`), keyboard row walks (`qwer`, `asdf`), common terms (including leet normalization like `P@ssw0rd` → `password`).
 
-We assume an aggressive GPU rig (10^10 guesses/sec baseline) and approximate search space size from dynamic charset detection. This is an order-of-magnitude educational figure, not a guarantee.
+## Personal Context
 
-## Extend Ideas
+Tokens (length ≥3) from a user-supplied string plus year-like patterns (19xx/20xx) are matched inside the password.
 
-- Integrate public breach APIs (optional, gated)
-- Add Markov model or probabilistic password rules
-- Provide interactive TUI with Rich live updates
-- Export CSV summary
+## File Scan Flow
+
+Read lines → hash for duplicate tracking → analyze (entropy, patterns, leaks) → collect hints/suggestion → write text and optional JSON.
+
+## Crack Time Estimate
+
+Educational only: `(2 ** entropy_bits) / 1e10` guesses/second. Real attacks prune the space; treat this as a rough scale.
+
+## Generator Policy
+
+Minimum length 14, requires lower, upper, digit, special. Ensures one of each then fills with randomized characters from combined pool and shuffles.
+
+## Limitations
+
+No breach API checks yet, simplified entropy model, small pattern corpus, CLI only, assumes local usage.
+
+## Modules Overview
+
+| Module       | Purpose                              |
+| ------------ | ------------------------------------ |
+| entropy.py   | Entropy math + strength tier + hints |
+| patterns.py  | Pattern/common term detection        |
+| context.py   | Personal info leak detection         |
+| generator.py | Secure generation + policy exposure  |
+| scanner.py   | Batch file scan + reporting          |
+| cli.py       | Typer CLI glue                       |
 
 ## Testing
 
-```bash
-pytest -q
-```
+Run `pytest -q`. Tests cover entropy calc, patterns, generator policy, scanner logic, CLI JSON output.
+
+## Add A New Pattern
+
+Edit `patterns.py`, add logic or term, add a test, run pytest. Keep each addition simple and focused.
+
+## Future Ideas
+
+Breach API checks, reversed/shifted keyboard sequences, probabilistic strength models, CSV/HTML exporters, TUI, web wrapper.
+
+## Automation Ideas
+
+Use JSON output in CI to enforce minimum entropy; scan internal dumps without exposing raw passwords; auto-generate onboarding secrets.
+
+## Resume Summary
+
+"Built a Python CLI that evaluates password strength (entropy + real patterns), detects personal info leaks, audits files, and generates secure alternatives. Modular design, JSON/text reporting, and full test suite for reliability."
 
 ## Philosophy
 
-Readable > Clever. Deterministic > Magical. Honest about limitations. This code should feel handcrafted—because it is.
+Readable > clever. Explain _why_, not just “weak”. Security learning > strict rule enforcement.
 
-## License
 
-Select a license appropriate for sharing (currently UNLICENSED placeholder).
+## 11. Crack Time Estimate (Reality Check)

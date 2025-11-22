@@ -13,6 +13,7 @@ src/password_tool.egg-info/dependency_links.txt
 src/password_tool.egg-info/entry_points.txt
 src/password_tool.egg-info/requires.txt
 src/password_tool.egg-info/top_level.txt
+tests/test_cli_analyze_json.py
 tests/test_entropy.py
 tests/test_generator.py
 tests/test_patterns.py

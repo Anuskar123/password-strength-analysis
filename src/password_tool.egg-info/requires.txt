@@ -5,3 +5,6 @@ rich>=13.0
 pytest>=7.0
 mypy>=1.0
 ruff>=0.5.0
+
+[docs]
+fpdf2>=2.7

@@ -6,18 +6,19 @@
 
 :root {
   --primary-color: #3b82f6;
-  --secondary-color: #8b5cf6;
+  --secondary-color: #1e293b;
   --success-color: #10b981;
   --warning-color: #f59e0b;
   --danger-color: #ef4444;
-  --bg-color: #f8fafc;
-  --card-bg: #ffffff;
-  --text-primary: #1e293b;
-  --text-secondary: #64748b;
-  --border-color: #e2e8f0;
-  --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1),
-    0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --bg-color: #000000;
+  --card-bg: #1a1a1a;
+  --text-primary: #ffffff;
+  --text-secondary: #d1d5db;
+  --border-color: #333333;
+  --shadow: 0 1px 3px 0 rgb(255 255 255 / 0.1),
+    0 1px 2px -1px rgb(255 255 255 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(255 255 255 / 0.1),
+    0 4px 6px -4px rgb(255 255 255 / 0.1);
 }
 
 body {
@@ -43,10 +44,7 @@ header h1 {
   font-size: 3rem;
   margin-bottom: 0.75rem;
   font-weight: 800;
-  background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #ffffff;
   letter-spacing: -0.02em;
 }
 
@@ -66,18 +64,18 @@ header p {
   flex: 1;
   min-width: 150px;
   padding: 0.75rem 1.5rem;
-  background: rgba(255, 255, 255, 0.9);
-  border: none;
+  background: #1a1a1a;
+  border: 1px solid #333333;
   border-radius: 8px;
   cursor: pointer;
   font-size: 1rem;
   font-weight: 500;
-  color: var(--text-primary);
+  color: #ffffff;
   transition: all 0.3s ease;
 }
 
 .tab-button:hover {
-  background: white;
+  background: #2a2a2a;
   transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
 }
@@ -98,12 +96,12 @@ header p {
 
 /* Card */
 .card {
-  background: white;
+  background: #1a1a1a;
   border-radius: 20px;
   padding: 2.5rem;
   box-shadow: var(--shadow-xl);
   margin-bottom: 2rem;
-  border: 1px solid rgba(226, 232, 240, 0.8);
+  border: 1px solid #333333;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -115,7 +113,7 @@ header p {
 .card h2 {
   font-size: 1.875rem;
   margin-bottom: 1.75rem;
-  color: var(--text-primary);
+  color: #ffffff;
   font-weight: 700;
   letter-spacing: -0.01em;
 }
@@ -123,7 +121,7 @@ header p {
 .card h3 {
   font-size: 1.5rem;
   margin-bottom: 1.25rem;
-  color: var(--text-primary);
+  color: #ffffff;
   font-weight: 700;
 } /* Form */
 .form-group {
@@ -134,7 +132,7 @@ header p {
   display: block;
   margin-bottom: 0.5rem;
   font-weight: 500;
-  color: var(--text-primary);
+  color: #ffffff;
 }
 
 .form-group small {
@@ -150,19 +148,20 @@ header p {
 .form-group textarea {
   width: 100%;
   padding: 0.875rem 1rem;
-  border: 2px solid #e2e8f0;
+  border: 2px solid #333333;
   border-radius: 12px;
   font-size: 1rem;
   transition: all 0.2s ease;
-  background: #f8fafc;
+  background: #2a2a2a;
+  color: #ffffff;
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
   outline: none;
   border-color: var(--primary-color);
-  background: white;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  background: #333333;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
 }
 .form-group textarea {
   resize: vertical;
@@ -322,12 +321,12 @@ input[type="range"] {
 
 .result-item {
   padding: 1.25rem;
-  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  background: #2a2a2a;
   border-radius: 16px;
   display: flex;
   flex-direction: column;
   gap: 0.625rem;
-  border: 1px solid #e2e8f0;
+  border: 1px solid #333333;
   transition: all 0.2s ease;
 }
 
@@ -347,13 +346,13 @@ input[type="range"] {
 .result-item .value {
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--text-primary);
+  color: #ffffff;
   letter-spacing: -0.01em;
 }
 .section {
   margin-top: 1.5rem;
   padding: 1rem;
-  background: var(--bg-color);
+  background: #1a1a1a;
   border-radius: 8px;
 }
 
@@ -363,7 +362,7 @@ input[type="range"] {
 
 .section h4 {
   margin-bottom: 0.75rem;
-  color: var(--text-primary);
+  color: #ffffff;
 }
 
 .findings-list {
@@ -374,9 +373,10 @@ input[type="range"] {
 .findings-list li {
   padding: 0.5rem;
   margin-bottom: 0.5rem;
-  background: white;
+  background: #2a2a2a;
   border-left: 4px solid var(--warning-color);
   border-radius: 4px;
+  color: #ffffff;
 }
 
 .suggestion-box,
@@ -385,7 +385,7 @@ input[type="range"] {
   align-items: center;
   gap: 1rem;
   padding: 1rem;
-  background: var(--bg-color);
+  background: #1a1a1a;
   border-radius: 8px;
   margin-top: 1rem;
 }
@@ -394,12 +394,12 @@ input[type="range"] {
 .generated-box code {
   flex: 1;
   padding: 0.75rem;
-  background: white;
-  border: 2px solid var(--border-color);
+  background: #2a2a2a;
+  border: 2px solid #333333;
   border-radius: 6px;
   font-family: "Courier New", monospace;
   font-size: 1.1rem;
-  color: var(--text-primary);
+  color: #ffffff;
 }
 
 .generated-password {
@@ -411,7 +411,7 @@ input[type="range"] {
 .quick-analysis {
   margin-top: 1rem;
   padding: 1rem;
-  background: var(--bg-color);
+  background: #1a1a1a;
   border-radius: 8px;
 }
 
@@ -448,17 +448,17 @@ input[type="range"] {
   flex: 1;
   min-width: 100px;
   padding: 1rem;
-  background: var(--bg-color);
+  background: #1a1a1a;
   border-radius: 8px;
   text-align: center;
-  border: 2px solid var(--border-color);
+  border: 2px solid #333333;
 }
 
 .stat-value {
   display: block;
   font-size: 2rem;
   font-weight: 700;
-  color: var(--text-primary);
+  color: #ffffff;
 }
 
 .stat-label {
@@ -500,7 +500,7 @@ input[type="range"] {
 table {
   width: 100%;
   border-collapse: collapse;
-  background: white;
+  background: #1a1a1a;
   border-radius: 8px;
   overflow: hidden;
 }
@@ -518,11 +518,12 @@ th {
 
 td {
   padding: 0.75rem 1rem;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid #333333;
+  color: #ffffff;
 }
 
 tbody tr:hover {
-  background: var(--bg-color);
+  background: #2a2a2a;
 }
 
 tbody tr.weak {
@@ -581,7 +582,7 @@ tbody tr.robust {
   display: flex;
   gap: 1rem;
   padding: 1rem;
-  background: var(--bg-color);
+  background: #1a1a1a;
   border-radius: 8px;
 }
 
@@ -593,7 +594,7 @@ tbody tr.robust {
 .tip-item strong {
   display: block;
   margin-bottom: 0.5rem;
-  color: var(--text-primary);
+  color: #ffffff;
 }
 
 .tip-item p {
@@ -610,20 +611,20 @@ tbody tr.robust {
 
 .policy-item {
   padding: 1rem;
-  background: var(--bg-color);
+  background: #1a1a1a;
   border-radius: 8px;
 }
 
 .policy-item strong {
   display: block;
   margin-bottom: 0.5rem;
-  color: var(--text-primary);
+  color: #ffffff;
 }
 
 .policy-item ul {
   margin-top: 0.5rem;
   margin-left: 1.5rem;
-  color: var(--text-secondary);
+  color: #d1d5db;
 }
 
 .policy-item li {
@@ -633,7 +634,7 @@ tbody tr.robust {
 /* Footer */
 footer {
   text-align: center;
-  color: #94a3b8;
+  color: #9ca3af;
   margin-top: 4rem;
   padding: 2rem 1rem;
   font-size: 0.9375rem;

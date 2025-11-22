@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Advanced password strength analysis tool - Analyze passwords, detect patterns, generate secure passwords"
+    />
+    <meta name="author" content="Anuskar123" />
+    <title>Password Strength Analyzer | Security Analysis Tool</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔐</text></svg>"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>🔐 Password Strength Analyzer</h1>
+        <p>Advanced password security analysis tool</p>
+      </header>
+
+      <div class="tabs">
+        <button class="tab-button active" onclick="showTab('analyze')">
+          Analyze Password
+        </button>
+        <button class="tab-button" onclick="showTab('generate')">
+          Generate Password
+        </button>
+        <button class="tab-button" onclick="showTab('batch')">
+          Batch Scan
+        </button>
+        <button class="tab-button" onclick="showTab('tips')">
+          Tips & Policy
+        </button>
+      </div>
+
+      <!-- Analyze Tab -->
+      <div id="analyze" class="tab-content active">
+        <div class="card">
+          <h2>Analyze Single Password</h2>
+          <form id="analyzeForm">
+            <div class="form-group">
+              <label for="password">Password:</label>
+              <div class="password-input-wrapper">
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  placeholder="Enter password to analyze"
+                  required
+                />
+                <button
+                  type="button"
+                  class="toggle-visibility"
+                  onclick="togglePasswordVisibility('password')"
+                >
+                  👁️
+                </button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="context">Personal Context (optional):</label>
+              <input
+                type="text"
+                id="context"
+                name="context"
+                placeholder="e.g., alice 2000 alice@example.com"
+              />
+              <small>Space-separated personal info to check for leaks</small>
+            </div>
+            <button type="submit" class="btn btn-primary">Analyze</button>
+          </form>
+
+          <div id="analysisResults" class="results hidden">
+            <h3>Analysis Results</h3>
+            <div class="strength-meter">
+              <div id="strengthBar" class="strength-bar"></div>
+            </div>
+            <div class="results-grid">
+              <div class="result-item">
+                <span class="label">Strength:</span>
+                <span id="strengthText" class="value"></span>
+              </div>
+              <div class="result-item">
+                <span class="label">Entropy:</span>
+                <span id="entropyText" class="value"></span>
+              </div>
+              <div class="result-item">
+                <span class="label">Score:</span>
+                <span id="scoreText" class="value"></span>
+              </div>
+              <div class="result-item">
+                <span class="label">Crack Time:</span>
+                <span id="crackTimeText" class="value"></span>
+              </div>
+            </div>
+
+            <div id="patternsSection" class="section hidden">
+              <h4>⚠️ Patterns Detected</h4>
+              <ul id="patternsList" class="findings-list"></ul>
+            </div>
+
+            <div id="leaksSection" class="section hidden">
+              <h4>🚨 Personal Information Leaks</h4>
+              <ul id="leaksList" class="findings-list"></ul>
+            </div>
+
+            <div id="hintsSection" class="section hidden">
+              <h4>💡 Improvement Hints</h4>
+              <ul id="hintsList" class="findings-list"></ul>
+            </div>
+
+            <div id="suggestionSection" class="section hidden">
+              <h4>✨ Suggested Strong Password</h4>
+              <div class="suggestion-box">
+                <code id="suggestedPassword"></code>
+                <button
+                  onclick="copyToClipboard('suggestedPassword')"
+                  class="btn btn-small"
+                >
+                  Copy
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Generate Tab -->
+      <div id="generate" class="tab-content">
+        <div class="card">
+          <h2>Generate Strong Password</h2>
+          <form id="generateForm">
+            <div class="form-group">
+              <label for="length">Password Length:</label>
+              <input
+                type="number"
+                id="length"
+                name="length"
+                value="16"
+                min="8"
+                max="64"
+              />
+              <input
+                type="range"
+                id="lengthSlider"
+                min="8"
+                max="64"
+                value="16"
+                oninput="document.getElementById('length').value = this.value"
+              />
+            </div>
+            <button type="submit" class="btn btn-primary">
+              Generate Password
+            </button>
+          </form>
+
+          <div id="generatedPassword" class="results hidden">
+            <h3>Generated Password</h3>
+            <div class="generated-box">
+              <code id="generatedText" class="generated-password"></code>
+              <button
+                onclick="copyToClipboard('generatedText')"
+                class="btn btn-small"
+              >
+                Copy
+              </button>
+            </div>
+            <div class="quick-analysis">
+              <p><strong>Entropy:</strong> <span id="genEntropy"></span></p>
+              <p><strong>Strength:</strong> <span id="genStrength"></span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Batch Scan Tab -->
+      <div id="batch" class="tab-content">
+        <div class="card">
+          <h2>Batch Password Scan</h2>
+          <div class="form-group">
+            <label for="passwordList">Enter passwords (one per line):</label>
+            <textarea
+              id="passwordList"
+              rows="10"
+              placeholder="password1&#10;password2&#10;password3"
+            ></textarea>
+          </div>
+          <button onclick="scanBatch()" class="btn btn-primary">
+            Scan Passwords
+          </button>
+
+          <div id="batchResults" class="results hidden">
+            <h3>Batch Scan Results</h3>
+            <div class="stats">
+              <div class="stat-item">
+                <span class="stat-value" id="totalCount">0</span>
+                <span class="stat-label">Total</span>
+              </div>
+              <div class="stat-item weak">
+                <span class="stat-value" id="weakCount">0</span>
+                <span class="stat-label">Weak</span>
+              </div>
+              <div class="stat-item moderate">
+                <span class="stat-value" id="moderateCount">0</span>
+                <span class="stat-label">Moderate</span>
+              </div>
+              <div class="stat-item strong">
+                <span class="stat-value" id="strongCount">0</span>
+                <span class="stat-label">Strong</span>
+              </div>
+              <div class="stat-item robust">
+                <span class="stat-value" id="robustCount">0</span>
+                <span class="stat-label">Robust</span>
+              </div>
+            </div>
+            <div class="table-container">
+              <table id="batchTable">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Password</th>
+                    <th>Strength</th>
+                    <th>Entropy</th>
+                    <th>Issues</th>
+                  </tr>
+                </thead>
+                <tbody id="batchTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tips & Policy Tab -->
+      <div id="tips" class="tab-content">
+        <div class="card">
+          <h2>Password Security Tips</h2>
+          <div class="tips-list">
+            <div class="tip-item">
+              <span class="tip-icon"> </span>
+              <div>
+                <strong>Length Matters</strong>
+                <p>
+                  Favor passwords with at least 12 characters. Longer passwords
+                  are exponentially harder to crack.
+                </p>
+              </div>
+            </div>
+            <div class="tip-item">
+              <span class="tip-icon">⌨</span>
+              <div>
+                <strong>Avoid Patterns</strong>
+                <p>
+                  Keyboard walks (qwerty, asdf) and obvious sequences (1234,
+                  abcd) are easily guessed.
+                </p>
+              </div>
+            </div>
+            <div class="tip-item">
+              <span class="tip-icon"></span>
+              <div>
+                <strong>No Personal Data</strong>
+                <p>
+                  Don't embed names, birthdays, or email addresses in your
+                  passwords.
+                </p>
+              </div>
+            </div>
+            <div class="tip-item">
+              <span class="tip-icon"></span>
+              <div>
+                <strong>Mix Character Types</strong>
+                <p>
+                  Combine uppercase, lowercase, digits, and special characters
+                  for maximum unpredictability.
+                </p>
+              </div>
+            </div>
+            <div class="tip-item">
+              <span class="tip-icon"></span>
+              <div>
+                <strong>Unique Per Service</strong>
+                <p>
+                  Never reuse passwords. A breach in one service shouldn't
+                  compromise all your accounts.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Password Generation Policy</h2>
+          <div class="policy-details">
+            <div class="policy-item">
+              <strong>Minimum Length:</strong> 14 characters
+            </div>
+            <div class="policy-item">
+              <strong>Required Classes:</strong> Lowercase, Uppercase, Digits,
+              Special Characters
+            </div>
+            <div class="policy-item">
+              <strong>Character Pool Sizes:</strong>
+              <ul>
+                <li>Lowercase: 26 characters (a-z)</li>
+                <li>Uppercase: 26 characters (A-Z)</li>
+                <li>Digits: 10 characters (0-9)</li>
+                <li>Special: 8 characters (!@#$%^&*)</li>
+              </ul>
+            </div>
+            <div class="policy-item">
+              <strong>Total Character Pool:</strong> 70 characters
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <p>
+          Built better password security |
+          <a
+            href="https://github.com/Anuskar123/password-strength-analysis"
+            target="_blank"
+            >View on GitHub</a
+          >
+        </p>
+      </footer>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

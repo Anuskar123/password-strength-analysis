@@ -40,7 +40,7 @@ pwtool --help
 ## Example Usage
 
 ```bash
-pwtool analyze "P@ssw0rd2025!" --context "alice 2000 alice@example.com" --json-out one.json
+pwtool analyze "P@ssw0rd12345!" --context "luffy 2000 luffy@example.com" --json-out one.json
 pwtool scan passwords.txt --redact --json-out scan.json
 pwtool generate --length 18
 pwtool policy
